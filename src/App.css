@@ -6,4 +6,5 @@
     padding: 0;
     vertical-align: center;
     font-size: 100%;
+    box-sizing: border-box;
 }
