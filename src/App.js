@@ -64,6 +64,45 @@ const App = () => {
         return results;
     };
 
+    const update = () => {
+        localStorage.setItem('seriesArray', JSON.stringify(seriesArray));
+        console.log(seriesArray);
+    };
+
+    const onAddSeries = () => {
+        const newSeriesArray = [...seriesArray, createSeries()];
+        setSeriesArray(newSeriesArray);
+        update();
+    };
+    const onDeleteSeries = series => () => {
+        const newSeriesArray = [...seriesArray];
+        newSeriesArray.splice(newSeriesArray.indexOf(series), 1);
+        setSeriesArray(newSeriesArray);
+        update();
+    };
+    const onAddEntry = series => () => {
+        const newSeriesArray = [...seriesArray];
+        const newSeries = newSeriesArray[newSeriesArray.indexOf(series)];
+        newSeries.entries = [...newSeries.entries, createEntry()];
+        setSeriesArray(newSeriesArray);
+        update();
+    };
+
+    const saveEntry = series => entry => (gist, note, tags) => {
+        const newSeriesArray = [...seriesArray];
+        const newSeries = newSeriesArray[newSeriesArray.indexOf(series)];
+        newSeries.entries[newSeries.entries.indexOf(entry)] = updateEntry(entry, gist, note, tags);
+        setSeriesArray(newSeriesArray);
+        update();
+    };
+    const deleteEntry = series => entry => {
+        const newSeriesArray = [...seriesArray];
+        const newSeries = newSeriesArray[newSeriesArray.indexOf(series)];
+        newSeries.entries.splice(newSeries.entries.indexOf(entry), 1);
+        setSeriesArray(newSeriesArray);
+        update();
+    };
+
     const appStyle = {
         maxWidth: '45rem',
         margin: '0 auto',
@@ -78,7 +117,9 @@ const App = () => {
                 onChangeSearchTags={onChangeSearchTags}
             />
             {/*<SeriesList/>*/}
-            {/*<PostButton/>*/}
+            <PostButton
+                onAddSeries={onAddSeries}
+            />
         </div>
     );
 };
