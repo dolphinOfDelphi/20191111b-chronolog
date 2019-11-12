@@ -4,10 +4,10 @@ import {clickable, field, tagField} from './App';
 const lining = '2px #ccc solid';
 const sidebarPercentWidth = 30;
 const sidebar = {
-    flex: `1 1 ${sidebarPercentWidth}%`,
+    width: `${sidebarPercentWidth}%`,
 };
 const content = {
-    flex: `4 4 ${100 - sidebarPercentWidth}%`,
+    width: `${100 - sidebarPercentWidth}%`,
     alignSelf: 'stretch',
     borderLeft: lining,
     paddingLeft: '1rem',
@@ -30,8 +30,8 @@ export const SeriesList = (props) => {
 };
 const Series = (props) => {
     const style = {
-        display: 'flex',
         margin: '1rem 0',
+        listStyle: 'none',
     };
     return (
         <li style={style}>
@@ -43,27 +43,23 @@ const Series = (props) => {
                         saveEntry={props.saveEntry(entry)}
                         deleteEntry={props.deleteEntry}
                     />)}
-                {
-                    (props.series.entries.length > 0)
-                        ? <li
-                            style={{display: 'flex'}}
-                        >
-                            <div style={sidebar}/>
-                            <AddEntryButton
-                                onAddEntry={props.onAddEntry}
-                            />
-                        </li>
-                        :
-                        <li
-                            style={{display: 'flex'}}
-                        >
-                            <DeleteSeriesButton onDeleteSeries={props.onDeleteSeries}/>
-                            <AddEntryButton
-                                onAddEntry={props.onAddEntry}
-                            />
-                        </li>
-                }
             </ul>
+            {
+                (props.series.entries.length > 0)
+                    ? <div style={{display: 'flex'}}>
+                        <div style={sidebar}/>
+                        <AddEntryButton
+                            onAddEntry={props.onAddEntry}
+                        />
+                    </div>
+                    :
+                    <div style={{display: 'flex'}}>
+                        <DeleteSeriesButton onDeleteSeries={props.onDeleteSeries}/>
+                        <AddEntryButton
+                            onAddEntry={props.onAddEntry}
+                        />
+                    </div>
+            }
         </li>
     );
 };
@@ -149,7 +145,7 @@ const TimeStamp = (props) => {
         ...sidebar,
         backgroundColor: props.editing ? 'lightblue' : 'white',
         padding: '0 1rem',
-        fontSize: '100%',
+        fontSize: '80%',
     };
     return (
         <div
@@ -168,12 +164,13 @@ const Editor = (props) => {
         e.target.style.height = 'inherit';
         e.target.style.height = `${e.target.scrollHeight}px`;
     };
+
     const style = {
         ...content,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'stretch',
-        fontSize: '125%',
+        fontSize: '105%',
     };
     return (
         <div style={style}>
@@ -217,7 +214,7 @@ const Info = (props) => {
         flexDirection: 'column',
         alignItems: 'stretch',
         borderBottom: '1px rgba(0,0,0,0.1) solid',
-        fontSize: '125%',
+        fontSize: '105%',
     };
     return (
         <div
