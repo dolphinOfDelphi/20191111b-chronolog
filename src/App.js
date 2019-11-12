@@ -1,17 +1,20 @@
 import React from 'react';
 import './App.css';
 import {Query} from './Query';
-import {PostButton} from './PostButton';
+import {AddSeriesButton} from './AddSeriesButton';
+import {SeriesList} from './SeriesList';
 
 const createSeries = (entries = []) => ({entries});
 const createEntry =
     (
-        createdAt = new Date().toLocaleString('en-GB'),
-        updatedAt = new Date().toLocaleString('en-GB'),
         gist = '',
         note = '',
         tags = '',
-    ) => ({createdAt, updatedAt, gist, note, tags});
+    ) => ({
+        createdAt: new Date().toLocaleString('en-GB'),
+        updatedAt: new Date().toLocaleString('en-GB'),
+        gist, note, tags,
+    });
 const updateEntry = (entry, gist, note, tags) => {
     const newEntry = {...entry};
     newEntry.updatedAt = new Date().toLocaleString('en-GB');
@@ -21,18 +24,19 @@ const updateEntry = (entry, gist, note, tags) => {
     return newEntry;
 };
 
-const clickable = {
+const lining = '2px #ccc solid';
+export const clickable = {
     minHeight: '48px',
 };
 export const field = {
     ...clickable,
     padding: '0 1rem',
-    borderBottom: '2px rgba(0,0,0,0.1) solid',
+    borderBottom: lining,
 };
 export const tagField = {
     ...clickable,
     padding: '0 1rem',
-    border: '2px rgba(0,0,0,0.1) solid',
+    border: lining,
     borderRadius: '10px',
 };
 
@@ -47,27 +51,25 @@ const App = () => {
     const querySeriesArray = () => {
         let results = [...seriesArray];
         if (searchWords) {
+            const lowercase = searchWords.toLowerCase();
             results = results.filter(series => series.entries.some(
-                entry => entry.createdAt.includes(searchWords)
-                    || entry.updatedAt.includes(searchWords)
-                    || entry.gist.includes(searchWords)
-                    || entry.note.includes(searchWords),
+                entry => entry.createdAt.toLowerCase().includes(lowercase)
+                    || entry.updatedAt.toLowerCase().includes(lowercase)
+                    || entry.gist.toLowerCase().includes(lowercase)
+                    || entry.note.toLowerCase().includes(lowercase),
             ));
         }
         if (searchTags) {
-            const tagsArray = searchTags.split(' ');
+            const tagsArray = searchTags.toLowerCase().split(' ');
             results = results.filter(series => series.entries.some(
-                entry => entry.tags.split(' ').some(tag => tagsArray.indexOf(tag) > -1),
+                entry => entry.tags.toLowerCase().split(' ').some(tag => tagsArray.indexOf(tag) > -1),
             ));
         }
 
         return results;
     };
 
-    const update = () => {
-        localStorage.setItem('seriesArray', JSON.stringify(seriesArray));
-        console.log(seriesArray);
-    };
+    const update = () => localStorage.setItem('seriesArray', JSON.stringify(seriesArray));
 
     const onAddSeries = () => {
         const newSeriesArray = [...seriesArray, createSeries()];
@@ -116,8 +118,14 @@ const App = () => {
                 searchTags={searchTags}
                 onChangeSearchTags={onChangeSearchTags}
             />
-            {/*<SeriesList/>*/}
-            <PostButton
+            <SeriesList
+                seriesArray={querySeriesArray()}
+                onDeleteSeries={onDeleteSeries}
+                onAddEntry={onAddEntry}
+                saveEntry={saveEntry}
+                deleteEntry={deleteEntry}
+            />
+            <AddSeriesButton
                 onAddSeries={onAddSeries}
             />
         </div>

@@ -2,11 +2,11 @@ import React from 'react';
 import {field, tagField} from './App';
 
 export const Query = (props) => {
-    const queryStyle = {
+    const style = {
         display: 'flex',
     };
     return (
-        <div style={queryStyle}>
+        <div style={style}>
             <SearchBar
                 searchWords={props.searchWords}
                 onChangeSearchWords={props.onChangeSearchWords}
@@ -19,11 +19,11 @@ export const Query = (props) => {
     );
 };
 const SearchBar = (props) => {
-    const searchBarStyle = {
+    const style = {
         flex: '1 1 50%',
     };
     return (
-        <div style={searchBarStyle}>
+        <div style={style}>
             <input
                 style={field}
                 type='text'
@@ -34,13 +34,12 @@ const SearchBar = (props) => {
     );
 };
 const TagBar = (props) => {
-    const tagBarStyle = {
+    const style = {
         flex: '1 1 50%',
         paddingLeft: '1rem',
     };
     return (
-        <div style={
-            tagBarStyle}>
+        <div style={style}>
             <input
                 style={tagField}
                 type='text'
