@@ -132,6 +132,7 @@ const Entry = (props) => {
                     onChangeNote={onChangeNote}
                     tags={tags}
                     onChangeTags={onChangeTags}
+                    onToggle={onToggle}
                 />
                 : <Info
                     gist={gist}
@@ -160,6 +161,13 @@ const TimeStamp = (props) => {
     );
 };
 const Editor = (props) => {
+    const onKeyDown = (e) => {
+        if (e.key === 'Enter') props.onToggle();
+    };
+    const resizeTextarea = (e) => {
+        e.target.style.height = 'inherit';
+        e.target.style.height = `${e.target.scrollHeight}px`;
+    };
     const style = {
         ...content,
         display: 'flex',
@@ -174,6 +182,7 @@ const Editor = (props) => {
                 type='text'
                 value={props.gist}
                 onChange={props.onChangeGist}
+                onKeyDown={onKeyDown}
             />
             <textarea
                 style={{
@@ -183,12 +192,15 @@ const Editor = (props) => {
                 }}
                 value={props.note}
                 onChange={props.onChangeNote}
+                onKeyUp={resizeTextarea}
+                onFocus={resizeTextarea}
             />
             <input
                 style={tagField}
                 type='text'
                 value={props.tags}
                 onChange={props.onChangeTags}
+                onKeyDown={onKeyDown}
             />
         </div>
     );
@@ -211,9 +223,9 @@ const Info = (props) => {
             style={style}
             onClick={onToggle}
         >
-            <div style={{fontWeight: 'bold'}}>
-                {props.gist}
-            </div>
+            {isExpanded
+                ? <div style={{backgroundColor: 'yellow', fontWeight: 'bold'}}>{props.gist}</div>
+                : <div style={{fontWeight: 'bold'}}>{props.gist}</div>}
             {isExpanded
             && <div style={{fontStyle: 'italic', whiteSpace: 'pre-wrap'}}>
                 {props.note}
