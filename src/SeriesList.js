@@ -88,10 +88,13 @@ const DeleteSeriesButton = (props) => {
     );
 };
 const Entry = (props) => {
-    const [editing, setEditing] = React.useState(false);
     const [gist, setGist] = React.useState(props.entry.gist);
     const [note, setNote] = React.useState(props.entry.note);
     const [tags, setTags] = React.useState(props.entry.tags);
+    const [editing, setEditing] = React.useState(
+        (gist.length === 0)
+        && (note.length === 0)
+        && (tags.length === 0));
 
     const onChangeGist = (e) => setGist(e.target.value);
     const onChangeNote = (e) => setNote(e.target.value);
@@ -111,6 +114,7 @@ const Entry = (props) => {
     const style = {
         display: 'flex',
         alignItems: 'flex-start',
+        borderTop: '1px rgba(0,0,0,0.2) solid',
     };
     return (
         <li style={style}>
@@ -213,7 +217,6 @@ const Info = (props) => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'stretch',
-        borderBottom: '1px rgba(0,0,0,0.1) solid',
         fontSize: '105%',
     };
     return (

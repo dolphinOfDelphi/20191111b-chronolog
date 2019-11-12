@@ -40,6 +40,9 @@ export const tagField = {
     borderRadius: '10px',
 };
 
+const ExportButton = (props) =>
+    <div style={{...clickable, backgroundColor: 'gray'}} onClick={props.onExport}/>;
+
 const App = () => {
     const [searchWords, setSearchWords] = React.useState('');
     const [searchTags, setSearchTags] = React.useState('');
@@ -71,6 +74,7 @@ const App = () => {
     };
 
     const update = () => localStorage.setItem('seriesArray', JSON.stringify(seriesArray));
+    const onExport = () => console.log(JSON.stringify(seriesArray));
 
     const onAddSeries = () => {
         setSeriesArray([...seriesArray, createSeries()]);
@@ -126,10 +130,9 @@ const App = () => {
                 saveEntry={saveEntry}
                 deleteEntry={deleteEntry}
             />
+            <ExportButton onExport={onExport}/>
             <div ref={bottomRef}/>
-            <AddSeriesButton
-                onAddSeries={onAddSeries}
-            />
+            <AddSeriesButton onAddSeries={onAddSeries}/>
         </div>
     );
 };
