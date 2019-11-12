@@ -147,6 +147,7 @@ const TimeStamp = (props) => {
         ...clickable,
         ...sidebar,
         backgroundColor: props.editing ? 'lightblue' : 'white',
+        padding: '0 1rem',
         fontSize: '100%',
     };
     return (
@@ -175,7 +176,11 @@ const Editor = (props) => {
                 onChange={props.onChangeGist}
             />
             <textarea
-                style={{...field, fontStyle: 'italic'}}
+                style={{
+                    ...field,
+                    fontStyle: 'italic',
+                    whiteSpace: 'pre-wrap',
+                }}
                 value={props.note}
                 onChange={props.onChangeNote}
             />
@@ -194,6 +199,7 @@ const Info = (props) => {
     const onToggle = () => setIsExpanded(!isExpanded);
 
     const style = {
+        ...clickable,
         ...content,
         display: 'flex',
         flexDirection: 'column',
@@ -201,15 +207,15 @@ const Info = (props) => {
         fontSize: '125%',
     };
     return (
-        <div style={style}>
-            <div
-                style={{fontWeight: 'bold'}}
-                onClick={onToggle}
-            >
+        <div
+            style={style}
+            onClick={onToggle}
+        >
+            <div style={{fontWeight: 'bold'}}>
                 {props.gist}
             </div>
             {isExpanded
-            && <div style={{fontStyle: 'italic'}}>
+            && <div style={{fontStyle: 'italic', whiteSpace: 'pre-wrap'}}>
                 {props.note}
             </div>}
             {isExpanded

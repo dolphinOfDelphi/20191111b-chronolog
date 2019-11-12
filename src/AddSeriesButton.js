@@ -3,7 +3,7 @@ import React from 'react';
 export const AddSeriesButton = (props) => {
     const style = {
         backgroundColor: 'lightgreen',
-        position: 'absolute',
+        position: 'fixed',
         right: '5%',
         bottom: '5%',
         width: '96px',

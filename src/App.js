@@ -72,8 +72,7 @@ const App = () => {
     const update = () => localStorage.setItem('seriesArray', JSON.stringify(seriesArray));
 
     const onAddSeries = () => {
-        const newSeriesArray = [...seriesArray, createSeries()];
-        setSeriesArray(newSeriesArray);
+        setSeriesArray([...seriesArray, createSeries()]);
         update();
     };
     const onDeleteSeries = series => () => {
