@@ -45,6 +45,7 @@ const App = () => {
     const [searchTags, setSearchTags] = React.useState('');
 
     const [seriesArray, setSeriesArray] = React.useState(JSON.parse(localStorage.getItem('seriesArray')) || []);
+    const bottomRef = React.useRef(null);
 
     const onChangeSearchWords = (e) => setSearchWords(e.target.value);
     const onChangeSearchTags = (e) => setSearchTags(e.target.value);
@@ -74,6 +75,7 @@ const App = () => {
     const onAddSeries = () => {
         setSeriesArray([...seriesArray, createSeries()]);
         update();
+        bottomRef.current.scrollIntoView({behavior: 'smooth'});
     };
     const onDeleteSeries = series => () => {
         const newSeriesArray = [...seriesArray];
@@ -124,6 +126,7 @@ const App = () => {
                 saveEntry={saveEntry}
                 deleteEntry={deleteEntry}
             />
+            <div ref={bottomRef}/>
             <AddSeriesButton
                 onAddSeries={onAddSeries}
             />

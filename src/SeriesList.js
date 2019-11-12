@@ -216,6 +216,7 @@ const Info = (props) => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'stretch',
+        borderBottom: '1px rgba(0,0,0,0.1) solid',
         fontSize: '125%',
     };
     return (
